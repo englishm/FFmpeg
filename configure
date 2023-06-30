@@ -248,6 +248,7 @@ External library support:
   --enable-libkvazaar      enable HEVC encoding via libkvazaar [no]
   --enable-liblensfun      enable lensfun lens correction [no]
   --enable-libmodplug      enable ModPlug via libmodplug [no]
+  --enable-libmoq          enable MoQ via libmoq [no]
   --enable-libmp3lame      enable MP3 encoding via libmp3lame [no]
   --enable-libopencore-amrnb enable AMR-NB de/encoding via libopencore-amrnb [no]
   --enable-libopencore-amrwb enable AMR-WB decoding via libopencore-amrwb [no]
@@ -1872,6 +1873,7 @@ EXTERNAL_LIBRARY_LIST="
     libkvazaar
     libmodplug
     libmp3lame
+    libmoq
     libmysofa
     libopencv
     libopenh264
@@ -3673,6 +3675,8 @@ ipns_gateway_protocol_select="https_protocol"
 # external library protocols
 libamqp_protocol_deps="librabbitmq"
 libamqp_protocol_select="network"
+libmoq_protocol_deps="libmoq"
+libmoq_protocol_select="network"
 librist_protocol_deps="librist"
 librist_protocol_select="network"
 librtmp_protocol_deps="librtmp"
@@ -6747,6 +6751,7 @@ if enabled libmfx; then
 fi
 
 enabled libmodplug        && require_pkg_config libmodplug libmodplug libmodplug/modplug.h ModPlug_Load
+enabled libmoq            && require_pkg_config libmoq libmoq libmoq/moq.h createClient
 enabled libmp3lame        && require "libmp3lame >= 3.98.3" lame/lame.h lame_set_VBR_quality -lmp3lame $libm_extralibs
 enabled libmysofa         && { check_pkg_config libmysofa libmysofa mysofa.h mysofa_neighborhood_init_withstepdefine ||
                                require libmysofa mysofa.h mysofa_neighborhood_init_withstepdefine -lmysofa $zlib_extralibs; }
